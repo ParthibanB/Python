@@ -1,0 +1,22 @@
+#This is used for Dynamically to get all the record count from the MongoDB Database
+# xx.xx.xx.xxx insted of this use your local system IP or MongoDB running server IP
+
+import pymongo
+from pymongo import MongoClient
+client=MongoClient('mongodb://xx.xx.xx.xxx:27017/')
+
+def main():
+		# to get all the database Name
+        dbs=client.database_names()
+        print '{0:12} {1:20} {2:20}'.format('DB_Name','Collection_Name','No_of_Records')
+        for database in dbs:
+				# to get all the collections name based on selected database
+                db =  client[database]
+                collection_list = db.collection_names()
+                for collection in collection_list:
+						#to get all the records based on selected collection name
+                        rec_cnt=db[collection].count()
+                        print '{0:<12} {1:<12}\t {2:^12}'.format(database,collection,rec_cnt)
+if __name__ == "__main__":
+		# starting point of execution
+        main() 
